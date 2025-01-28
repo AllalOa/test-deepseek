@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="bg-[#f4f6f9] font-[Poppins] min-h-screen flex">
-  <!-- Sidebar -->
+  <!-- Sidebar (No changes) -->
   <div class="w-[280px] fixed h-screen bg-gradient-to-br from-[#2b2d42] to-[#1a1b27] text-white shadow-xl p-6">
     <div class="border-b border-white/10 pb-4 mb-6">
       <h4 class="text-xl font-semibold tracking-wide flex items-center gap-2">
@@ -20,13 +20,13 @@
     <nav>
       <ul class="space-y-2">
         <li>
-          <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#4361ee] text-white shadow-md transition-all hover:translate-x-1">
+          <a href="#" id="dashboardLink" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#4361ee] text-white shadow-md transition-all hover:translate-x-1">
             <i class="fas fa-home w-5 text-center"></i>
             Dashboard
           </a>
         </li>
         <li>
-          <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all">
+          <a href="#" id="inventoryLink" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all">
             <i class="fas fa-tasks w-5 text-center"></i>
             Manage Inventory
           </a>
@@ -64,30 +64,43 @@
       </div>
     </div>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-white p-6 rounded-xl shadow-sm transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 rounded-lg bg-[#4361ee] flex items-center justify-center mb-4">
-          <i class="fas fa-box-open text-white text-xl"></i>
-        </div>
-        <h3 class="text-3xl font-semibold mb-1">1,234</h3>
-        <p class="text-[#6c757d]">Total Products</p>
+    <!-- Original Dashboard Content -->
+    <div id="dashboardContent">
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- ... (keep original stats cards same) ... -->
       </div>
-      
-      <div class="bg-white p-6 rounded-xl shadow-sm transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 rounded-lg bg-[#10b981] flex items-center justify-center mb-4">
-          <i class="fas fa-dollar-sign text-white text-xl"></i>
-        </div>
-        <h3 class="text-3xl font-semibold mb-1">$12,456</h3>
-        <p class="text-[#6c757d]">Daily Sales</p>
-      </div>
+    </div>
 
-      <div class="bg-white p-6 rounded-xl shadow-sm transition-transform hover:-translate-y-1">
-        <div class="w-12 h-12 rounded-lg bg-[#f59e0b] flex items-center justify-center mb-4">
-          <i class="fas fa-users text-white text-xl"></i>
+    <!-- New Products Content (Hidden by default) -->
+    <div id="productsContent" class="hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Product Cards -->
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden transition-transform hover:-translate-y-1">
+          <img src="https://www.nestleprofessional.ph/sites/default/files/styles/np_product_detail/public/2023-01/NESTL%C3%89%C2%AE%20Fresh%20Milk%201L.png?itok=L6Ey2VqZ" class="w-full h-48 object-cover" alt="Product">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Fresh Milk</h3>
+            <p class="text-[#6c757d] mb-4">Pasteurized whole milk, 1L bottle</p>
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold text-[#4361ee]">$2.99</span>
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-800">Stock: 45</span>
+            </div>
+          </div>
         </div>
-        <h3 class="text-3xl font-semibold mb-1">89</h3>
-        <p class="text-[#6c757d]">New Customers</p>
+
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden transition-transform hover:-translate-y-1">
+          <img src="https://via.placeholder.com/300x200?text=Bread" class="w-full h-48 object-cover" alt="Product">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Whole Wheat Bread</h3>
+            <p class="text-[#6c757d] mb-4">Freshly baked organic bread</p>
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold text-[#4361ee]">$3.49</span>
+              <span class="px-3 py-1 rounded-full bg-red-100 text-red-800">Stock: 12</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add more product cards as needed -->
       </div>
     </div>
 
@@ -96,5 +109,29 @@
       <p>&copy; 2025 Supermarket Pro. All rights reserved</p>
     </div>
   </div>
+
+  <script>
+    // Toggle between Dashboard and Products views
+    const dashboardLink = document.getElementById('dashboardLink');
+    const inventoryLink = document.getElementById('inventoryLink');
+    const dashboardContent = document.getElementById('dashboardContent');
+    const productsContent = document.getElementById('productsContent');
+
+    inventoryLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      dashboardContent.classList.add('hidden');
+      productsContent.classList.remove('hidden');
+      inventoryLink.classList.add('bg-[#4361ee]', 'text-white', 'shadow-md');
+      dashboardLink.classList.remove('bg-[#4361ee]', 'text-white', 'shadow-md');
+    });
+
+    dashboardLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      dashboardContent.classList.remove('hidden');
+      productsContent.classList.add('hidden');
+      dashboardLink.classList.add('bg-[#4361ee]', 'text-white', 'shadow-md');
+      inventoryLink.classList.remove('bg-[#4361ee]', 'text-white', 'shadow-md');
+    });
+  </script>
 </body>
 </html>
