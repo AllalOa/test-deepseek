@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cashier Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById("profileDropdown");
+            dropdown.classList.toggle("show-dropdown");
+        }
+        
+        // Close dropdown when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-icon')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show-dropdown')) {
+                        openDropdown.classList.remove('show-dropdown');
+                    }
+                }
+            }
+        }
+        </script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <h1>SuperMarket System - Cashier</h1>
+            <div class="profile-menu">
+                <i class="fas fa-user-circle profile-icon" style="font-size: 40px; color: white;" onclick="toggleDropdown()"></i>
+                <div class="dropdown-content" id="profileDropdown">
+                    <a href="#profile">Profile</a>
+                    <a href="#logout">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li>New Sale</li>
+                <li>Return Items</li>
+                <li>Daily Report</li>
+                <li>Receipt History</li>
+                <li>Cash Drawer</li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <h2 class="role-header">Cashier Dashboard</h2>
+            <div class="dashboard-card">
+                <h3>Today's Transactions</h3>
+                <button class="btn" style="background:#27ae60;color:white;">Start New Sale</button>
+                <button class="btn" style="background:#e74c3c;color:white;">Process Return</button>
+            </div>
+            <div class="dashboard-card">
+                <h3>Recent Transactions</h3>
+                <!-- Transaction list would go here -->
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>SuperMarket System © 2023 | Cashier Interface</p>
+        </footer>
+    </div>
+</body>
+</html>
