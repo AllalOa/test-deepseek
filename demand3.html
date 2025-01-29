@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demande de Produits au Magasinier</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8f9fa] p-5">
+  <div class="bg-white rounded-xl shadow-sm max-w-[800px] w-full p-6 mb-8 flex gap-6">
+    <!-- Product List Container -->
+    <div class="flex-1 bg-[#f8f9fa] p-4 rounded-lg border border-[#e9ecef]">
+      <h3 class="text-[#2b2d42] text-lg font-semibold mb-4">Liste des Produits Demandés</h3>
+      
+      <table class="w-full mb-4 bg-white rounded-lg overflow-hidden shadow-sm">
+        <thead class="bg-[#2b2d42] text-white">
+          <tr>
+            <th class="p-3 text-left">Produit</th>
+            <th class="p-3 text-left">Quantité</th>
+            <th class="p-3 text-left">Prix Unitaire (€)</th>
+            <th class="p-3 text-left">Total (€)</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#e9ecef]">
+          <!-- Products will be added here -->
+        </tbody>
+      </table>
+
+      <div class="bg-[#f8f9fa] p-3 rounded-lg text-[#2b2d42] font-semibold">
+        <strong>Total de la Commande : </strong><span id="total-price">0.00</span> €
+      </div>
+
+      <button 
+        onclick="window.print();" 
+        class="w-full mt-4 bg-[#2b2d42] text-white py-2 px-4 rounded-lg hover:bg-[#1a1b27] transition-colors"
+      >
+        Imprimer la Demande
+      </button>
+    </div>
+
+    <!-- Request Form -->
+    <div class="flex-2 space-y-4">
+      <h2 class="text-[#2b2d42] text-xl font-semibold">Demande de Produits</h2>
+      <h4 class="text-[#4a4c60] font-medium">Num Demande :</h4>
+
+      <form id="request-form" class="space-y-4">
+        <div>
+          <label class="block text-[#4a4c60] font-medium mb-1">Nom du Demandeur :</label>
+          <input type="text" class="w-full p-2 border border-[#e9ecef] rounded-lg focus:ring-2 focus:ring-[#4361ee] focus:border-transparent">
+        </div>
+
+        <div>
+          <label class="block text-[#4a4c60] font-medium mb-1">Destination :</label>
+          <input type="text" class="w-full p-2 border border-[#e9ecef] rounded-lg focus:ring-2 focus:ring-[#4361ee] focus:border-transparent">
+        </div>
+
+        <h4 class="text-[#4a4c60] font-medium mt-6">Ajouter un produit</h4>
+
+        <div>
+          <label class="block text-[#4a4c60] font-medium mb-1">Produit :</label>
+          <input type="text" class="w-full p-2 border border-[#e9ecef] rounded-lg focus:ring-2 focus:ring-[#4361ee] focus:border-transparent">
+        </div>
+
+        <div>
+          <label class="block text-[#4a4c60] font-medium mb-1">Quantité :</label>
+          <input type="number" class="w-full p-2 border border-[#e9ecef] rounded-lg focus:ring-2 focus:ring-[#4361ee] focus:border-transparent">
+        </div>
+
+        <button 
+          type="button" 
+          id="add-product" 
+          class="w-full bg-[#4361ee] text-white py-2 px-4 rounded-lg hover:bg-[#3b52cc] transition-colors"
+        >
+          Ajouter le Produit
+        </button>
+
+        <div class="flex gap-3 mt-6">
+          <button type="submit" class="flex-1 bg-[#4361ee] text-white py-2 px-4 rounded-lg hover:bg-[#3b52cc] transition-colors">
+            Envoyer la Demande
+          </button>
+          <button type="reset" class="flex-1 bg-[#dc3545] text-white py-2 px-4 rounded-lg hover:bg-[#bb2d3b] transition-colors">
+            Réinitialiser
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Keep the same JavaScript functionality
+    const addProductButton = document.getElementById('add-product');
+    const productList = document.querySelector('tbody');
+    const totalPriceElement = document.getElementById('total-price');
+
+    addProductButton.addEventListener('click', () => {
+      const product = document.querySelector('#product').value;
+      const quantity = document.querySelector('#quantity').value;
+      const pricePerUnit = 10; // Exemple : prix unitaire fixe
+      const total = (quantity * pricePerUnit).toFixed(2);
+
+      if (product && quantity > 0) {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-[#f8f9fa]';
+        row.innerHTML = `
+          <td class="p-3">${product}</td>
+          <td class="p-3">${quantity}</td>
+          <td class="p-3">${pricePerUnit}</td>
+          <td class="p-3">${total}</td>
+        `;
+        productList.appendChild(row);
+
+        const currentTotal = parseFloat(totalPriceElement.textContent) || 0;
+        totalPriceElement.textContent = (currentTotal + parseFloat(total)).toFixed(2);
+
+        document.querySelector('#product').value = '';
+        document.querySelector('#quantity').value = '';
+      } else {
+        alert('Veuillez saisir un produit et une quantité valides.');
+      }
+    });
+  </script>
+</body>
+</html>

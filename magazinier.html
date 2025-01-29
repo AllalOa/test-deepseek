@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supermarket Pro - Magazinier Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    [x-cloak] { display: none !important; }
+    .low-stock { background-color: #fef3c7; }
+    .critical-stock { background-color: #fee2e2; }
+  </style>
+</head>
+<body class="bg-[#f4f6f9] font-[Poppins] min-h-screen flex">
+  <!-- Sidebar -->
+  <div class="w-[280px] fixed h-screen bg-gradient-to-br from-[#2b2d42] to-[#1a1b27] text-white shadow-xl p-6">
+    <div class="border-b border-white/10 pb-4 mb-6">
+      <h4 class="text-xl font-semibold tracking-wide flex items-center gap-2">
+        <i class="fas fa-store"></i>
+        Supermarket Pro
+      </h4>
+    </div>
+    <nav>
+      <ul class="space-y-2">
+        <li>
+          <a href="#" data-target="dashboard" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg bg-[#4361ee] text-white shadow-md">
+            <i class="fas fa-home w-5 text-center"></i>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" data-target="inventory" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white">
+            <i class="fas fa-boxes w-5 text-center"></i>
+            Manage Inventory
+          </a>
+        </li>
+        <li>
+          <a href="#" data-target="addProduct" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white">
+            <i class="fas fa-plus-circle w-5 text-center"></i>
+            Add Product
+          </a>
+        </li>
+        <li>
+          <a href="#" data-target="receiveOrder" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white">
+            <i class="fas fa-truck-loading w-5 text-center"></i>
+            Receive Orders
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="ml-[280px] flex-1 p-8">
+    <!-- Navbar -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-8 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-semibold text-[#2b2d42]">Welcome, Magazinier</h1>
+        <p class="text-[#6c757d]">Last login: Today at 09:42 AM</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <img src="https://via.placeholder.com/40" class="rounded-full w-10 h-10" alt="User">
+        <div>
+          <h6 class="font-medium mb-0">John Doe</h6>
+          <small class="text-[#6c757d]">Magazinier</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboard" class="content-section">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-[#6c757d]">Total Products</p>
+              <p id="totalProducts" class="text-3xl font-bold text-[#2b2d42]">0</p>
+            </div>
+            <i class="fas fa-boxes text-2xl text-[#4361ee]"></i>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-[#6c757d]">Low Stock Items</p>
+              <p id="lowStock" class="text-3xl font-bold text-[#2b2d42]">0</p>
+            </div>
+            <i class="fas fa-exclamation-triangle text-2xl text-[#4361ee]"></i>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-[#6c757d]">Pending Orders</p>
+              <p class="text-3xl font-bold text-[#2b2d42]">3</p>
+            </div>
+            <i class="fas fa-clipboard-list text-2xl text-[#4361ee]"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventory Content -->
+    <div id="inventory" class="content-section hidden">
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold text-[#2b2d42]">Inventory Management</h2>
+          <input type="text" id="searchInput" placeholder="Search products..." class="px-4 py-2 rounded-lg border border-gray-200 w-64">
+        </div>
+        <table class="w-full">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="py-3 px-4 text-left">ID</th>
+              <th class="py-3 px-4 text-left">Product Name</th>
+              <th class="py-3 px-4 text-left">Category</th>
+              <th class="py-3 px-4 text-left">Quantity</th>
+              <th class="py-3 px-4 text-left">Price</th>
+              <th class="py-3 px-4 text-left">Status</th>
+              <th class="py-3 px-4 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryList">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Add Product Content -->
+    <div id="addProduct" class="content-section hidden">
+      <div class="bg-white rounded-xl shadow-sm p-6 max-w-2xl">
+        <h2 class="text-xl font-semibold text-[#2b2d42] mb-6">Add New Product</h2>
+        <form id="productForm">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Product Name</label>
+              <input type="text" id="productName" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Category</label>
+              <select id="productCategory" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+                <option value="Dairy">Dairy</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Produce">Produce</option>
+                <option value="Meat">Meat</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Initial Quantity</label>
+              <input type="number" id="productQuantity" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Price</label>
+              <input type="number" step="0.01" id="productPrice" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Low Stock Threshold</label>
+              <input type="number" id="stockThreshold" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+            </div>
+          </div>
+          <button type="submit" class="mt-6 px-6 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3b52cc]">
+            Add Product
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Receive Order Content -->
+    <div id="receiveOrder" class="content-section hidden">
+      <div class="bg-white rounded-xl shadow-sm p-6 max-w-2xl">
+        <h2 class="text-xl font-semibold text-[#2b2d42] mb-6">Receive New Order</h2>
+        <form id="orderForm">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Product</label>
+              <select id="orderProduct" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Quantity Received</label>
+              <input type="number" id="orderQuantity" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Supplier Name</label>
+              <input type="text" id="supplierName" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-[#6c757d] mb-2">Order Date</label>
+              <input type="date" id="orderDate" class="w-full px-4 py-2 rounded-lg border border-gray-200" required>
+            </div>
+          </div>
+          <button type="submit" class="mt-6 px-6 py-2 bg-[#4361ee] text-white rounded-lg hover:bg-[#3b52cc]">
+            Receive Order
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-[#6c757d] mt-8">
+      <p>&copy; 2024 Supermarket Pro. All rights reserved</p>
+    </div>
+  </div>
+
+  <script>
+    let inventory = JSON.parse(localStorage.getItem('inventory')) || [
+      { id: 1, name: 'Fresh Milk', quantity: 45, price: 2.99, category: 'Dairy', threshold: 20 },
+      { id: 2, name: 'Whole Wheat Bread', quantity: 32, price: 3.49, category: 'Bakery', threshold: 15 }
+    ];
+
+    // Navigation
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('bg-[#4361ee]', 'text-white', 'shadow-md'));
+        link.classList.add('bg-[#4361ee]', 'text-white', 'shadow-md');
+        document.querySelectorAll('.content-section').forEach(s => s.classList.add('hidden'));
+        document.getElementById(link.dataset.target).classList.remove('hidden');
+      });
+    });
+
+    // Inventory Management
+    function updateInventory() {
+      localStorage.setItem('inventory', JSON.stringify(inventory));
+      renderInventory();
+      updateDashboard();
+      populateOrderProducts();
+    }
+
+    function renderInventory() {
+      const tbody = document.getElementById('inventoryList');
+      tbody.innerHTML = '';
+      
+      inventory.forEach(item => {
+        const status = item.quantity <= item.threshold ? 
+          `<span class="text-red-500">Low Stock (${item.quantity}/${item.threshold})</span>` : 
+          `<span class="text-green-500">In Stock</span>`;
+        
+        tbody.innerHTML += `
+          <tr class="${item.quantity <= item.threshold ? 'low-stock' : ''}">
+            <td class="py-3 px-4">${item.id}</td>
+            <td class="py-3 px-4">${item.name}</td>
+            <td class="py-3 px-4">${item.category}</td>
+            <td class="py-3 px-4">${item.quantity}</td>
+            <td class="py-3 px-4">$${item.price.toFixed(2)}</td>
+            <td class="py-3 px-4">${status}</td>
+            <td class="py-3 px-4">
+              <button onclick="editProduct(${item.id})" class="text-blue-500 hover:text-blue-700 mr-2">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button onclick="deleteProduct(${item.id})" class="text-red-500 hover:text-red-700">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function updateDashboard() {
+      document.getElementById('totalProducts').textContent = inventory.length;
+      document.getElementById('lowStock').textContent = inventory.filter(i => i.quantity <= i.threshold).length;
+    }
+
+    function populateOrderProducts() {
+      const select = document.getElementById('orderProduct');
+      select.innerHTML = inventory.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+    }
+
+    // Product Form
+    document.getElementById('productForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newProduct = {
+        id: inventory.length + 1,
+        name: document.getElementById('productName').value,
+        category: document.getElementById('productCategory').value,
+        quantity: parseInt(document.getElementById('productQuantity').value),
+        price: parseFloat(document.getElementById('productPrice').value),
+        threshold: parseInt(document.getElementById('stockThreshold').value)
+      };
+      
+      inventory.push(newProduct);
+      updateInventory();
+      e.target.reset();
+      alert('Product added successfully!');
+    });
+
+    // Order Form
+    document.getElementById('orderForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const productId = parseInt(document.getElementById('orderProduct').value);
+      const quantity = parseInt(document.getElementById('orderQuantity').value);
+      
+      const product = inventory.find(p => p.id === productId);
+      if (product) {
+        product.quantity += quantity;
+        updateInventory();
+        e.target.reset();
+        alert('Order received successfully!');
+      }
+    });
+
+    // Search
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const searchTerm = e.target.value.toLowerCase();
+      const filtered = inventory.filter(item => 
+        item.name.toLowerCase().includes(searchTerm) ||
+        item.category.toLowerCase().includes(searchTerm)
+      );
+      document.getElementById('inventoryList').innerHTML = filtered.map(item => `
+        <tr class="${item.quantity <= item.threshold ? 'low-stock' : ''}">
+          <td class="py-3 px-4">${item.id}</td>
+          <td class="py-3 px-4">${item.name}</td>
+          <td class="py-3 px-4">${item.category}</td>
+          <td class="py-3 px-4">${item.quantity}</td>
+          <td class="py-3 px-4">$${item.price.toFixed(2)}</td>
+          <td class="py-3 px-4">${item.quantity <= item.threshold ? 'Low Stock' : 'In Stock'}</td>
+          <td class="py-3 px-4">
+            <button onclick="editProduct(${item.id})" class="text-blue-500 hover:text-blue-700 mr-2">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button onclick="deleteProduct(${item.id})" class="text-red-500 hover:text-red-700">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    });
+
+    // Initial Setup
+    updateInventory();
+    populateOrderProducts();
+  </script>
+</body>
+</html>

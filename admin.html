@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supermarket Pro - Cashier Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-[#f4f6f9] font-[Poppins] min-h-screen flex">
+<!-- Sidebar -->
+<div class="w-[280px] fixed h-screen bg-gradient-to-br from-[#2b2d42] to-[#1a1b27] text-white shadow-xl p-6">
+  <div class="border-b border-white/10 pb-4 mb-6">
+    <h4 class="text-xl font-semibold tracking-wide flex items-center gap-2">
+      <i class="fas fa-store"></i>
+      Supermarket Pro
+    </h4>
+  </div>
+  <nav>
+    <ul class="space-y-2">
+      <li>
+        <a href="#" id="dashboardLink" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#4361ee] text-white shadow-md transition-all">
+          <i class="fas fa-home w-5 text-center"></i>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="#" id="addCashierLink" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fas fa-user-plus w-5 text-center"></i>
+          Add Cashier
+        </a>
+      </li>
+      <li>
+        <a href="#" id="addMagazinierLink" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fas fa-boxes w-5 text-center"></i>
+          Add Magazinier
+        </a>
+      </li>
+      <li>
+        <a href="#" id="inventoryLink" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fas fa-tasks w-5 text-center"></i>
+          Inventory
+        </a>
+      </li>
+      <li>
+        <a href="#" id="analyticsLink" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fas fa-chart-line w-5 text-center"></i>
+          Analytics
+        </a>
+      </li>
+      <li>
+        <a href="#" id="settingsLink" class="flex items-center gap-3 px-4 py-3 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fas fa-cog w-5 text-center"></i>
+          Settings
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+  <!-- Main Content -->
+  <div class="ml-[280px] flex-1 p-8">
+    <!-- Navbar -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-8 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-semibold text-[#2b2d42]">Welcome, admin</h1>
+        <p class="text-[#6c757d]">Last login: Today at 09:42 AM</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <img src="https://via.placeholder.com/40" class="rounded-full w-10 h-10" alt="User">
+        <div>
+          <h6 class="font-medium mb-0">John Doe</h6>
+          <small class="text-[#6c757d]">Cashier</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Content -->
+    <div id="dashboardContent">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-[#6c757d]">Today's Sales</p>
+              <p class="text-3xl font-bold text-[#2b2d42]">$2,450</p>
+            </div>
+            <i class="fas fa-shopping-cart text-2xl text-[#4361ee]"></i>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-[#6c757d]">Transactions</p>
+              <p class="text-3xl font-bold text-[#2b2d42]">48</p>
+            </div>
+            <i class="fas fa-receipt text-2xl text-[#4361ee]"></i>
+          </div>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="flex justify-between items-center">
+            <div>
+              <p class="text-[#6c757d]">Customers</p>
+              <p class="text-3xl font-bold text-[#2b2d42]">62</p>
+            </div>
+            <i class="fas fa-users text-2xl text-[#4361ee]"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inventory Content -->
+    <div id="inventoryContent" class="hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden transition-transform hover:-translate-y-1">
+          <img src="https://www.nestleprofessional.ph/sites/default/files/styles/np_product_detail/public/2023-01/NESTL%C3%89%C2%AE%20Fresh%20Milk%201L.png?itok=L6Ey2VqZ" class="w-full h-48 object-cover" alt="Product">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">Fresh Milk</h3>
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold text-[#4361ee]">$2.99</span>
+              <span class="px-3 py-1 rounded-full bg-green-100 text-green-800">Stock: 45</span>
+            </div>
+          </div>
+        </div>
+        <!-- Add more products as needed -->
+      </div>
+    </div>
+
+    <!-- Analytics Content -->
+    <div id="analyticsContent" class="hidden">
+      <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold text-[#2b2d42]">Sales Analytics</h2>
+          <div class="flex gap-2">
+            <button class="px-4 py-2 rounded-lg bg-[#4361ee] text-white text-sm">7 Days</button>
+            <button class="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 text-sm">30 Days</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-gradient-to-r from-[#4361ee] to-[#3f37c9] p-6 rounded-xl text-white">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-sm mb-1">Total Earnings</p>
+                <p class="text-2xl font-bold">$24,560</p>
+              </div>
+              <i class="fas fa-wallet text-3xl opacity-70"></i>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-[#4cc9f0] to-[#4895ef] p-6 rounded-xl text-white">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-sm mb-1">Avg. Daily Sales</p>
+                <p class="text-2xl font-bold">$1,230</p>
+              </div>
+              <i class="fas fa-chart-line text-3xl opacity-70"></i>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-[#7209b7] to-[#560bad] p-6 rounded-xl text-white">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-sm mb-1">Top Product</p>
+                <p class="text-2xl font-bold">Milk</p>
+              </div>
+              <i class="fas fa-star text-3xl opacity-70"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <canvas id="earningsChart" class="w-full h-96"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Content -->
+    <div id="settingsContent" class="hidden">
+      <div class="bg-white rounded-xl shadow-sm p-6">
+        <h2 class="text-xl font-semibold text-[#2b2d42] mb-6">Account Settings</h2>
+        <div class="max-w-lg">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-[#6c757d] mb-2">Full Name</label>
+            <input type="text" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-[#4361ee]">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-[#6c757d] mb-2">Email</label>
+            <input type="email" class="w-full px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-[#4361ee]">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-[#6c757d] mt-8">
+      <p>&copy; 2024 Supermarket Pro. All rights reserved</p>
+    </div>
+  </div>
+
+  <script>
+    // Initialize Chart
+    const ctx = document.getElementById('earningsChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Weekly Earnings',
+          data: [650, 590, 800, 810, 560, 550, 400],
+          borderColor: '#4361ee',
+          tension: 0.4,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#e5e7eb' } },
+          x: { grid: { display: false } }
+        }
+      }
+    });
+
+    // Navigation Handling
+    const links = {
+      dashboard: document.getElementById('dashboardLink'),
+      inventory: document.getElementById('inventoryLink'),
+      analytics: document.getElementById('analyticsLink'),
+      settings: document.getElementById('settingsLink')
+    };
+
+    const contents = {
+      dashboard: document.getElementById('dashboardContent'),
+      inventory: document.getElementById('inventoryContent'),
+      analytics: document.getElementById('analyticsContent'),
+      settings: document.getElementById('settingsContent')
+    };
+
+    function activateView(view) {
+      // Hide all contents
+      Object.values(contents).forEach(content => content.classList.add('hidden'));
+      // Remove active states
+      Object.values(links).forEach(link => link.classList.remove('bg-[#4361ee]', 'text-white', 'shadow-md'));
+      // Show selected content
+      contents[view].classList.remove('hidden');
+      // Add active state
+      links[view].classList.add('bg-[#4361ee]', 'text-white', 'shadow-md');
+    }
+
+    // Add event listeners
+    Object.entries(links).forEach(([view, link]) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        activateView(view);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demande de Produits au Magasinier</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-5 min-h-screen">
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6 flex flex-col md:flex-row gap-10">
+    <!-- Product List Section -->
+    <div class="w-full md:w-1/3 bg-gray-50 rounded-lg p-5 shadow-sm mb-4 md:mb-0">
+      <h3 class="text-lg font-semibold text-gray-800 mb-5 text-center">Liste des Produits Demandés</h3>
+      
+      <table class="w-full border-collapse mt-4">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="p-3 text-left border-b border-gray-200">Produit</th>
+            <th class="p-3 text-left border-b border-gray-200">Quantité</th>
+            <th class="p-3 text-left border-b border-gray-200">Prix Unitaire (€)</th>
+            <th class="p-3 text-left border-b border-gray-200">Total (€)</th>
+          </tr>
+        </thead>
+        <tbody id="product-list" class="divide-y divide-gray-200">
+          <!-- Products will be added here -->
+        </tbody>
+      </table>
+
+      <div class="mt-6 p-3 bg-gray-50 rounded-lg font-semibold text-gray-800">
+        <span>Total de la Commande : </span>
+        <span id="total-price" class="float-right">0.00</span> €
+      </div>
+
+      <button 
+        onclick="window.print();" 
+        class="w-full mt-6 bg-indigo-600 text-white py-2.5 px-4 rounded-md hover:bg-indigo-700 transition-colors"
+      >
+        Imprimer la Demande
+      </button>
+    </div>
+
+    <!-- Request Form Section -->
+    <div class="w-full md:w-2/3 space-y-8 pl-0 md:pl-6">
+      <h2 class="text-xl font-bold text-gray-800 mb-2 text-center">Demande de Produits</h2>
+      <h4 class="text-gray-600 font-medium mb-6 text-center">Num Demande :</h4>
+
+      <form id="request-form" class="space-y-8">
+        <div class="space-y-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nom du Demandeur :</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name"
+              class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+          </div>
+
+          <div>
+            <label for="destination" class="block text-sm font-medium text-gray-700 mb-2">Destination :</label>
+            <input 
+              type="text" 
+              id="destination" 
+              name="destination"
+              class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-gray-200 space-y-6">
+          <h4 class="text-gray-600 font-medium">Ajouter un produit</h4>
+          
+          <div class="space-y-6">
+            <div>
+              <label for="product" class="block text-sm font-medium text-gray-700 mb-2">Produit :</label>
+              <input 
+                type="text" 
+                id="product" 
+                name="product"
+                class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required
+              >
+            </div>
+
+            <div>
+              <label for="quantity" class="block text-sm font-medium text-gray-700 mb-2">Quantité :</label>
+              <input 
+                type="number" 
+                id="quantity" 
+                name="quantity"
+                class="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                required 
+                min="1"
+              >
+            </div>
+          </div>
+        </div>
+
+        <button 
+          type="button" 
+          id="add-product" 
+          class="w-full bg-blue-600 text-white py-2.5 px-4 rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Ajouter le Produit
+        </button>
+
+        <div class="flex gap-6 mt-10">
+          <button 
+            type="submit" 
+            class="flex-1 bg-green-600 text-white py-2.5 px-4 rounded-md hover:bg-green-700 transition-colors"
+          >
+            Envoyer la Demande
+          </button>
+          <button 
+            type="reset" 
+            class="flex-1 bg-red-600 text-white py-2.5 px-4 rounded-md hover:bg-red-700 transition-colors"
+          >
+            Réinitialiser
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const addProductButton = document.getElementById('add-product');
+    const productList = document.getElementById('product-list');
+    const totalPriceElement = document.getElementById('total-price');
+
+    addProductButton.addEventListener('click', () => {
+      const product = document.getElementById('product').value;
+      const quantity = document.getElementById('quantity').value;
+      const pricePerUnit = 10; // Example fixed unit price
+      const total = (quantity * pricePerUnit).toFixed(2);
+
+      if (product && quantity > 0) {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50';
+        row.innerHTML = `
+          <td class="p-3">${product}</td>
+          <td class="p-3">${quantity}</td>
+          <td class="p-3">${pricePerUnit}</td>
+          <td class="p-3">${total}</td>
+        `;
+        productList.appendChild(row);
+
+        const currentTotal = parseFloat(totalPriceElement.textContent) || 0;
+        totalPriceElement.textContent = (currentTotal + parseFloat(total)).toFixed(2);
+
+        document.getElementById('product').value = '';
+        document.getElementById('quantity').value = '';
+      } else {
+        alert('Veuillez saisir un produit et une quantité valides.');
+      }
+    });
+  </script>
+</body>
+</html>
